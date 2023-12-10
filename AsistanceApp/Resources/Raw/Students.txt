@@ -1,0 +1,3 @@
+﻿ESP002, Jarom Mariscal, 22, Paseo del Torreon #257, 6442014434, M, 7221233398, 04/01/2009, Esperanza
+NOT003, Osmar Gutierrez, 23, Paseo de las golondrinas #902, 6554233231, M
+CAJ001, Nefi Galarza, 24, Coahuila #4332, 77312233012, M, 3443421122, 23/07/2008, Cajeme

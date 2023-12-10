@@ -25,6 +25,26 @@ namespace AsistanceApp.Models
             _phoneNumber = phoneNumber;
             _gender = gender;
         }
+        public string GetName()
+        {
+            return _name;
+        }
+        public int GetAge()
+        {
+            return _age;
+        }
+        public string GetAddress()
+        {
+            return _address;
+        }
+        public string GetPhoneNumber()
+        {
+            return _phoneNumber;
+        }
+        public string GetGender()
+        {
+            return _gender;
+        }
         public virtual string GetInfo()
         {
             return $"{_name}, {_address}, {_phoneNumber}, {_age}, {_gender}";

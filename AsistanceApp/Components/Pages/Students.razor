@@ -1,0 +1,66 @@
+﻿@page "/students"
+@using System.IO
+@using Microsoft.Extensions.Logging
+@inject ILogger<Students> Logger
+@using AsistanceApp.Components
+
+
+<h3>Students</h3>
+<table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Phone Number</th>
+                <th>Age</th>
+                <th>Gender</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach(Student student in _students)
+        {
+            <tr>
+                <td>@student.GetName()</td>
+                <td>@student.GetAddress()</td>
+                <td>@student.GetPhoneNumber()</td>
+                <td>@student.GetAge()</td>
+                <td>@student.GetGender()</td>
+            </tr>
+        }
+        </tbody>
+        
+</table>
+
+@code
+{
+    private List<Student> _students;
+    public Students()
+    {
+        _students = new List<Student>();
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            using var stream = await FileSystem.OpenAppPackageFileAsync("Students.txt");
+            using var reader = new StreamReader(stream);
+            string data = await reader.ReadToEndAsync();
+            string[] lines = data.Split("\n");
+            foreach(string line in lines)
+            {
+                Logger.Log(LogLevel.Information, line);
+                string[] recordsPerStudent = line.Split(",");
+                Logger.Log(LogLevel.Information,$"{recordsPerStudent.Length}");
+                Student newStudent = new Student(recordsPerStudent[1], int.Parse(recordsPerStudent[2]), recordsPerStudent[3], recordsPerStudent[4], recordsPerStudent[5]);
+                _students.Add(newStudent);
+                
+            }
+
+        }catch(FileNotFoundException fe)
+        {
+            Logger.LogError(fe,"Resource Not Found");
+        }
+
+    }
+
+}
