@@ -8,15 +8,29 @@ namespace AsistanceApp.Models
 {
     public class Course
     {
+        private string _id;
         private string _name;
         private List<Student> _students;
-        private Teacher _teacher;
+        private string _teacher;
         
-        public Course(string name, Teacher teacher)
+        public Course(string id,string name, string teacher)
         {
+            _id = id;
             _name = name;
             _teacher = teacher;
             _students = new List<Student>();
+        }
+        public string GetId()
+        {
+            return _id;
+        }
+        public string GetName()
+        {
+            return _name;
+        }
+        public string GetTeacher()
+        {
+            return _teacher;
         }
        
     }
