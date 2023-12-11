@@ -7,33 +7,16 @@
 @code {
     [Parameter]
     public string? Id{ get; set; }
-
+    private AppManager _app;
     private Student? _choiceStudent;
-
-
-
+    public StudentView()
+    {
+        _app = new AppManager();
+        _choiceStudent = new Student();
+    }
     protected override async Task OnInitializedAsync()
     {
-        try
-        {
-            using var stream = await FileSystem.OpenAppPackageFileAsync("Students.txt");
-            using var reader = new StreamReader(stream);
-            string data = await reader.ReadToEndAsync();
-            string[] lines = data.Split("\n");
-            foreach(string line in lines)
-            {
-                string[] record = line.Split(",");
-                if(Id == record[0])
-                {
-                    _choiceStudent = new Student(record[0], record[1], int.Parse(record[2]),record[3],record[4],record[5]);
-                }
-            }
-
-        }
-        catch (FileNotFoundException fe)
-        {
-            Logger.LogError(fe, "Resource Not Found");
-        }
+        _choiceStudent = await _app.FindStudentById(Id);
     }
     
 

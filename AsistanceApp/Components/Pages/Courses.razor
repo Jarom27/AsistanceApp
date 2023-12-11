@@ -25,30 +25,15 @@
 </table>
 @code {
     private List<Course> _courses;
+    private AppManager _app;
     public Courses()
     {
         _courses = new List<Course>();
+        _app = new AppManager();
     }
     protected override async Task OnInitializedAsync()
     {
-        try
-        {
-            using var stream = await FileSystem.OpenAppPackageFileAsync("Courses.txt");
-            using var reader = new StreamReader(stream);
-            string data = await reader.ReadToEndAsync();
-            string[] lines = data.Split("\n");
-            foreach (string line in lines)
-            {
-                string[] record = line.Split(",");
-                Course newCourse = new Course(record[0],record[1],record[2]);
-                _courses.Add(newCourse);
-            }
-
-        }
-        catch (FileNotFoundException fe)
-        {
-
-        }
+        _courses = await _app.GetAllCourses();
     }
     
 }

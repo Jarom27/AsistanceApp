@@ -17,6 +17,10 @@ namespace AsistanceApp.Models
         protected string? _gender;
         protected DateTime _birthdate;
 
+        public Person()
+        {
+
+        }
         public Person(string name, int age, string address, string phoneNumber, string gender)
         {
             _name = name;

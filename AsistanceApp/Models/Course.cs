@@ -12,6 +12,10 @@ namespace AsistanceApp.Models
         private string _name;
         private List<Student> _students;
         private string _teacher;
+        public Course()
+        {
+            _students = new List<Student>();
+        }
         
         public Course(string id,string name, string teacher)
         {
@@ -40,6 +44,15 @@ namespace AsistanceApp.Models
         {
             return _students;
         }
-       
+        public override bool Equals(object? obj)
+        {
+            var course = obj as Course;
+            if(course != null)
+            {
+                return course.GetId() == _id;
+            }
+            return false;
+        }
+
     }
 }
