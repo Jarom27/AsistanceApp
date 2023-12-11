@@ -1,10 +1,110 @@
-﻿@page "/course/{course}"
+﻿@page "/courses/{Id}"
+@using System.IO
+@using Microsoft.Extensions.Logging
+@inject ILogger<CourseView> Logger
 
-<h3></h3>
+<h3>@_choiceCourse?.GetName()</h3>
+<p>@_choiceCourse?.GetTeacher()</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Phone Number</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+    </tbody>
+
+</table>
 
 @code {
     [Parameter]
-    public Course _course { get;set; }
+    public string Id { get;set; }
 
-    
+    private Course? _choiceCourse;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            using var stream = await FileSystem.OpenAppPackageFileAsync("Courses.txt");
+            using var reader = new StreamReader(stream);
+            string data = await reader.ReadToEndAsync();
+            string[] lines = data.Split("\n");
+
+            foreach(string line in lines)
+            {
+                string[] record = line.Split(",");
+                if (Id == record[0])
+                {
+                    Logger.LogError(Id);
+                    _choiceCourse = new Course(record[0], record[1], record[2]);
+                    await FillStudents();
+                }
+            }
+
+
+        }catch(FileNotFoundException fe)
+        {
+
+        }
+    }
+    private async Task FillStudents()
+    {
+        try
+        {
+            
+            using var stream = await FileSystem.OpenAppPackageFileAsync("CoursesStudents.txt");
+            using var reader = new StreamReader(stream);
+            string data = await reader.ReadToEndAsync();
+
+            string[] lines = data.Split("\n");
+            foreach(string line in lines)
+            {
+                string[] record = line.Split(",");
+                if(record[1] == Id)
+                {
+                    await AddStudentToCourse(record[0]);
+                    Logger.Log(LogLevel.Information,"Added Student");
+                }
+
+            }
+        }catch(FileNotFoundException fx)
+        {
+
+        }
+    }
+    private async Task AddStudentToCourse(string studentId)
+    {
+        try
+        {
+            using var stream = await FileSystem.OpenAppPackageFileAsync("Students.txt");
+            using var reader = new StreamReader(stream);
+            string data = await reader.ReadToEndAsync();
+
+            string[] lines = data.Split("\n");
+            foreach(string line in lines)
+            {
+                string[] record = line.Split(",");
+                if(record[0] == studentId)
+                {
+                    Logger.LogError(record[0]);
+                    _choiceCourse?.AddStudent(new Student(record[0], record[1], int.Parse(record[2]),record[3],record[4],record[5]));
+                }
+
+            }
+        }
+        catch(FileNotFoundException fx)
+        {
+            
+        }
+    }
+
+
 }

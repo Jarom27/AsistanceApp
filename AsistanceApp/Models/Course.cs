@@ -32,6 +32,14 @@ namespace AsistanceApp.Models
         {
             return _teacher;
         }
+        public void AddStudent(Student student)
+        {
+            _students.Add(student);
+        }
+        public List<Student>? GetStudents()
+        {
+            return _students;
+        }
        
     }
 }
