@@ -1,0 +1,41 @@
+﻿@page "/student/{Id}"
+@using System.IO
+@using Microsoft.Extensions.Logging
+@inject ILogger<StudentView> Logger
+<h3>@_choiceStudent?.GetName()</h3>
+
+@code {
+    [Parameter]
+    public string? Id{ get; set; }
+
+    private Student? _choiceStudent;
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            using var stream = await FileSystem.OpenAppPackageFileAsync("Students.txt");
+            using var reader = new StreamReader(stream);
+            string data = await reader.ReadToEndAsync();
+            string[] lines = data.Split("\n");
+            foreach(string line in lines)
+            {
+                string[] record = line.Split(",");
+                if(Id == record[0])
+                {
+                    _choiceStudent = new Student(record[0], record[1], int.Parse(record[2]),record[3],record[4],record[5]);
+                }
+            }
+
+        }
+        catch (FileNotFoundException fe)
+        {
+            Logger.LogError(fe, "Resource Not Found");
+        }
+    }
+    
+
+
+}

@@ -11,11 +11,13 @@ namespace AsistanceApp.Models
         private string _name;
         private List<Student> _students;
         private Teacher _teacher;
+        
         public Course(string name, Teacher teacher)
         {
             _name = name;
             _teacher = teacher;
             _students = new List<Student>();
         }
+       
     }
 }

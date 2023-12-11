@@ -14,18 +14,13 @@
                 <th>Phone Number</th>
                 <th>Age</th>
                 <th>Gender</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
         @foreach(Student student in _students)
         {
-            <tr>
-                <td>@student.GetName()</td>
-                <td>@student.GetAddress()</td>
-                <td>@student.GetPhoneNumber()</td>
-                <td>@student.GetAge()</td>
-                <td>@student.GetGender()</td>
-            </tr>
+            <StudentInfo StudentElement=student></StudentInfo>
         }
         </tbody>
         
@@ -51,7 +46,7 @@
                 Logger.Log(LogLevel.Information, line);
                 string[] recordsPerStudent = line.Split(",");
                 Logger.Log(LogLevel.Information,$"{recordsPerStudent.Length}");
-                Student newStudent = new Student(recordsPerStudent[1], int.Parse(recordsPerStudent[2]), recordsPerStudent[3], recordsPerStudent[4], recordsPerStudent[5]);
+                Student newStudent = new Student(recordsPerStudent[0],recordsPerStudent[1], int.Parse(recordsPerStudent[2]), recordsPerStudent[3], recordsPerStudent[4], recordsPerStudent[5]);
                 _students.Add(newStudent);
                 
             }

@@ -1,8 +1,16 @@
-﻿<h3>Component1</h3>
+﻿<tr>
+    <td>@StudentElement.GetName()</td>
+    <td>@StudentElement.GetAddress()</td>
+    <td>@StudentElement.GetPhoneNumber()</td>
+    <td>@StudentElement.GetAge()</td>
+    <td>@StudentElement.GetGender()</td>
+    <td><a class="btn btn-primary" href="/student/@StudentElement.GetId()">View</a></td>
+</tr>
 
 @code {
+
     [Parameter]
-    public Student StudentElement { get; set; }
+    public Student? StudentElement { get; set; }
 
     
 }

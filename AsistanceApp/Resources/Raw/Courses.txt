@@ -1,4 +1,4 @@
-﻿Jesucristo y el evangelio sempiterno, TEA2
-La restauracion del Evangelio, TEA1
-Doctrina y enseñanzas del Libro de Mormon, TEA3
-Familia Eterna, TEA4
+﻿CLA001,Jesucristo y el evangelio sempiterno, TEA2
+CLA002,La restauracion del Evangelio, TEA1
+CLA003,Doctrina y enseñanzas del Libro de Mormon, TEA3
+CLA004,Familia Eterna, TEA4
