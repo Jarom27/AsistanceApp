@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AsistanceApp.Data
 {
-    public class Data
+    public interface IGettingData
     {
-       
-
+        public void Connect();
+        public Task MakeQuery(string query);
     }
 }

@@ -28,33 +28,17 @@
 
 @code
 {
-    private List<Student> _students;
+    private AppManager _app;
+    private List<Student>? _students;
     public Students()
     {
+        _app = new AppManager();
         _students = new List<Student>();
+
     }
     protected override async Task OnInitializedAsync()
     {
-        try
-        {
-            using var stream = await FileSystem.OpenAppPackageFileAsync("Students.txt");
-            using var reader = new StreamReader(stream);
-            string data = await reader.ReadToEndAsync();
-            string[] lines = data.Split("\n");
-            foreach(string line in lines)
-            {
-                Logger.Log(LogLevel.Information, line);
-                string[] recordsPerStudent = line.Split(",");
-                Logger.Log(LogLevel.Information,$"{recordsPerStudent.Length}");
-                Student newStudent = new Student(recordsPerStudent[0],recordsPerStudent[1], int.Parse(recordsPerStudent[2]), recordsPerStudent[3], recordsPerStudent[4], recordsPerStudent[5]);
-                _students.Add(newStudent);
-                
-            }
-
-        }catch(FileNotFoundException fe)
-        {
-            Logger.LogError(fe,"Resource Not Found");
-        }
+        _students = await _app.GetAllStudents();
 
     }
 
