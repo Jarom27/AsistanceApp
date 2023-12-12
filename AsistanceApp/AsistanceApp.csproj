@@ -58,6 +58,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Remove="Resources\Raw\Asistances.txt" />
+    </ItemGroup>
+
+    <ItemGroup>
       <Content Include="Resources\raw\Students.txt" />
     </ItemGroup>
 

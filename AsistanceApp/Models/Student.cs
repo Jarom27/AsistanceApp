@@ -20,7 +20,8 @@ namespace AsistanceApp.Models
         }
         public Student():base()
         {
-
+            _courses = new List<Course>();
+            _asistances = new List<Asistance>();
         }
         public string GetId()
         {
@@ -29,6 +30,18 @@ namespace AsistanceApp.Models
         public void SetCourse(Course course)
         {
             _courses.Add(course);
+        }
+        public void SetAsistance(int indexCourse, string date)
+        {
+            _asistances.Add(new Asistance(_courses[indexCourse],date));
+        }
+        public List<Asistance> GetAsistances()
+        {
+            return _asistances;
+        }
+        public List<Course> GetCourses()
+        {
+            return _courses;
         }
         public override bool Equals(object? obj)
         {

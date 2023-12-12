@@ -43,6 +43,9 @@ namespace AsistanceApp.Data
         public async Task<Student> FindStudentById(string id)
         {
             await GetAllStudents();
+            await GetAllCourses();
+            await FillAllData();
+            await FillAsistancesById(id);
             foreach (Student student in _students)
             {
                 if(student.GetId() == id)
@@ -51,6 +54,23 @@ namespace AsistanceApp.Data
                 }
             }
             return null;
+        }
+        public async Task FillAsistancesById(string id)
+        {
+            _dataManager = new FileDatabase();
+            string data = await _dataManager.GetQuery("Asistances.txt");
+            string[] lines = data.Split("\n");
+            int studentIndex = _students.FindIndex(x => x.GetId().Trim() == id);
+            Student student = _students[studentIndex];
+            foreach (string line in lines)
+            {
+                string[] record = line.Split(",");
+                if (record[0] == id)
+                {
+                    int courseIndex = student.GetCourses().FindIndex(x => x.GetId() == record[1]);
+                    student.SetAsistance(courseIndex, record[2].Trim());
+                }
+            }
         }
         public async Task FillAllData()
         {
@@ -95,6 +115,12 @@ namespace AsistanceApp.Data
                 }
             }
             return null;
+        }
+        public async Task RecordAsistance(string studentId,Asistance asistance)
+        {
+            _dataManager = new FileDatabase();
+
+            await _dataManager.RegisterData("Asistances.txt",$"{studentId},{asistance.GetCourse().GetId()},{asistance.GetTime()}");
         }
     }
 }

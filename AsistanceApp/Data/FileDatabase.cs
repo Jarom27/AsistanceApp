@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Foundation;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,13 @@ namespace AsistanceApp.Data
 
             }
             return _queryResult;
+        }
+        public async Task RegisterData(string query, string data)
+        {
+            using var stream = await FileSystem.OpenAppPackageFileAsync(query);
+            using var writer = new StreamWriter(stream);
+
+            await writer.WriteLineAsync(data);
         }
     }
 }
