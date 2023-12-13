@@ -9,6 +9,7 @@ namespace AsistanceApp.Models
     public class Course
     {
         private string _id;
+        public string ID { get; set; }
         private string _name;
         private List<Student> _students;
         private string _teacher;

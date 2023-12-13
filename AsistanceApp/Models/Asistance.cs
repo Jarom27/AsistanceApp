@@ -11,20 +11,30 @@ namespace AsistanceApp.Models
     {
         private DateTime _asistanceDate;
         private Course _course;
+        private string _courseId;
+        
 
-        public Asistance(Course course,string date)
+        public Asistance(string date)
         {
-            _course = course;
+            _course = new Course();
             _asistanceDate = DateTime.Parse(date);
-            
+            _courseId = _course.GetId();
         }
         public Course GetCourse()
         {
             return _course;
         }
+        public void SetCourse(Course course)
+        {
+            _course = course;
+        }
         public string GetTime()
         {
             return _asistanceDate.ToShortDateString();
+        }
+        public string GetCourseID()
+        {
+            return _courseId;
         }
 
     }

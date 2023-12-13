@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using AsistanceApp.Components.Pages;
 using AsistanceApp.Models;
 using Microsoft.Extensions.Logging;
-using Windows.UI.WebUI;
 
 namespace AsistanceApp.Data
 {
@@ -119,8 +118,8 @@ namespace AsistanceApp.Data
         public async Task RecordAsistance(string studentId,Asistance asistance)
         {
             _dataManager = new FileDatabase();
-
-            await _dataManager.RegisterData("Asistances.txt",$"{studentId},{asistance.GetCourse().GetId()},{asistance.GetTime()}");
+            _logger.LogError(asistance.GetCourseID());
+            //await _dataManager.RegisterData("Asistances.txt",$"{studentId},{asistance.GetCourse().GetId()},{asistance.GetTime()}");
         }
     }
 }

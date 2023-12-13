@@ -13,7 +13,7 @@
 </div>
 <div class="d-flex justify-content-between">
     <h4>Asistances</h4>
-    <button @onclick="OnClickRegisterAsistance"  class="btn btn-primary">Add Asistance</button>
+    <a href="/asistance/add/@_choiceStudent?.GetId()" class="btn btn-primary">Add Asistance</a>
 </div>
 <table class="table">
     <thead>
@@ -61,10 +61,7 @@
         _choiceStudent = await _app.FindStudentById(Id);
 
     }
-    private void OnClickRegisterAsistance()
-    {
-        
-    }
+   
 
 
 

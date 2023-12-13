@@ -33,7 +33,9 @@ namespace AsistanceApp.Models
         }
         public void SetAsistance(int indexCourse, string date)
         {
-            _asistances.Add(new Asistance(_courses[indexCourse],date));
+            Asistance asistance = new Asistance(date);
+            asistance.SetCourse(_courses[indexCourse]);
+            _asistances.Add(asistance);
         }
         public List<Asistance> GetAsistances()
         {

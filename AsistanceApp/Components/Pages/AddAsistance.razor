@@ -1,0 +1,54 @@
+﻿@using Microsoft.Extensions.Logging
+@inject ILogger<AddAsistance> Logger
+
+@page "/asistance/add/{ID}"
+<h3>Add Asistance</h3>
+<form class="g-3 row" @onsubmit="RegisterAsistance">
+    <div class="input-group">
+        <label for="course" class="input-group-text">Select Course</label>
+        <InputSelect id="course" class="form-select"  @bind-Value="ChoiceCourse.ID">
+            @foreach (Course course in _student.GetCourses())
+            {
+                <option value="@course.GetId()">@course.GetName()</option>
+            }
+        </InputSelect>
+    </div>
+    <div class="input-group">
+        <InputText class="form-control" name="currentTime" type="text" @bind-Value="DateForRegister" disabled />
+    </div>
+    
+    <input type="submit" value="Register" class="btn btn-primary"/>
+</form>
+@code {
+    [Parameter]
+    public string? ID { get; set; }
+
+    [SupplyParameterFromForm]
+    public Course ChoiceCourse { get; set; } 
+
+    public string DateForRegister{ get; set; }
+    private AppManager _appManager;
+    private Student? _student;
+    private DateTime _currentTime;
+    public AddAsistance(){
+        _appManager = new AppManager();
+        _student = new Student();
+        _currentTime = DateTime.Now;
+        ChoiceCourse = new Course();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _currentTime = DateTime.Now;
+        _student = await _appManager.FindStudentById(ID);
+        DateForRegister = _currentTime.ToLongDateString();
+    }
+    public async Task RegisterAsistance()
+    {
+        Logger.LogError(ChoiceCourse.GetId());
+        Course course = await _appManager.FindCourseById(ChoiceCourse.GetId());
+        Asistance asistance = new Asistance(DateForRegister);
+        asistance.SetCourse(course);
+        await _appManager.RecordAsistance(_student.GetId(),asistance);
+    }
+}
