@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Maui.Storage;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,10 +40,18 @@ namespace AsistanceApp.Data
         }
         public async Task RegisterData(string query, string data)
         {
-            using var stream = await FileSystem.OpenAppPackageFileAsync(query);
-            using var writer = new StreamWriter(stream);
+            try
+            {
+                using var stream = await FileSystem.OpenAppPackageFileAsync(query);
+                using (StreamWriter writer = new StreamWriter(stream))
+                {
+                    await writer.WriteLineAsync(data);
+                }
+            }
+            catch (FileNotFoundException fx)
+            {
 
-            await writer.WriteLineAsync(data);
+            }
         }
     }
 }

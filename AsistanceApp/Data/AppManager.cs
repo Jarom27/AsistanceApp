@@ -115,11 +115,10 @@ namespace AsistanceApp.Data
             }
             return null;
         }
-        public async Task RecordAsistance(string studentId,Asistance asistance)
+        public async Task RecordAsistance(string studentId, string datetime,string courseId)
         {
             _dataManager = new FileDatabase();
-            _logger.LogError(asistance.GetCourseID());
-            //await _dataManager.RegisterData("Asistances.txt",$"{studentId},{asistance.GetCourse().GetId()},{asistance.GetTime()}");
+            
         }
     }
 }
