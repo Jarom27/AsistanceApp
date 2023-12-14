@@ -22,5 +22,6 @@ is divided into MVC.
 Contains the Statice files.
 
 ## Execute the App 
-If You are using Linux, you can use the command for publishing, this page [https://learn.microsoft.com/en-us/dotnet/core/deploying/](Publishing Apps) said about this.
-In the directory I created an app for linux.
+If You are using Linux, you can use the command for publishing, this page [https://learn.microsoft.com/en-us/dotnet/core/deploying/](Publishing Apps) treats this topic.
+
+
